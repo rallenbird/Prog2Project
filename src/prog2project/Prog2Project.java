@@ -12,6 +12,7 @@ public class Prog2Project {
      */
     public static void main(String[] args) {
         System.out.println("HELLO WÖRLD!");
+        System.out.println("HELLO WÖRLD!");
     }
     
 }
