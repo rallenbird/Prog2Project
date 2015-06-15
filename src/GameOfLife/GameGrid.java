@@ -15,9 +15,14 @@ import javax.swing.JPanel;
 public class GameGrid extends JPanel {
     
     private final List<Point> fillCells;
+    private final int widthCell;
+    private final int heightCell;
     
     public GameGrid(){
-        fillCells = new ArrayList<>(25);
+        this.fillCells = new ArrayList<>(25);
+        
+        this.widthCell = 20;
+        this.heightCell = 20;
     }
     
     @Override
@@ -25,20 +30,22 @@ public class GameGrid extends JPanel {
         super.paintComponent(g);
         
         for (Point fillCell : fillCells) {
-            int cellX = 10 + (fillCell.x * 10);
-            int cellY = 10 + (fillCell.y * 10);
+            int cellX = this.getX() + (fillCell.x * this.widthCell);
+            int cellY = this.getY() + (fillCell.y * this.heightCell);
             g.setColor(Color.RED);
-            g.fillRect(cellX, cellY, 10, 10);
+            g.fillRect(cellX, cellY, this.widthCell, this.heightCell);
         }
         g.setColor(Color.GREEN);
         g.drawRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
-
-        for (int i = 10; i <= this.getWidth(); i += 10) {
-            g.drawLine(i, 10, i, this.getHeight()+10);
+        
+        // Zeichnet die vertikalen Linien
+        for (int i = this.getX()+this.widthCell; i <= this.getWidth(); i += this.widthCell) {
+            g.drawLine(i, this.getY(), i, this.getHeight());
         }
-
-        for (int i = 10; i <= this.getHeight(); i += 10) {
-            g.drawLine(10, i, this.getWidth()+10, i);
+        
+        // Zeichnet die horizontalen Linien
+        for (int i = this.getY()+this.heightCell; i <= this.getHeight(); i += this.heightCell) {
+            g.drawLine(this.getX(), i, this.getWidth(), i);
         }
     }
     

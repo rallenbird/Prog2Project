@@ -44,10 +44,10 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
         
         // Die Position und Größe des GameGrids wird gesetzt
         this.xCoordGrid = 10;
-        this.yCoordGrid = 10;
+        this.yCoordGrid = 0;
         
-        this.widthGrid = width-2*this.xCoordGrid;
-        this.heightGrid = height-this.yCoordGrid*2-this.heightPanel;
+        this.widthGrid = width-4*this.xCoordGrid;
+        this.heightGrid = height-this.yCoordGrid*4-this.heightPanel;
         
         // Ausgabe der Programmdetails (Debug)
         System.out.println("Grid: x:"+this.xCoordGrid+", y:"+this.yCoordGrid+", Höhe:"+this.heightGrid+", Breite:"+this.widthGrid);
