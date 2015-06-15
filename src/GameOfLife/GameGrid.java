@@ -15,14 +15,26 @@ import javax.swing.JPanel;
 public class GameGrid extends JPanel {
     
     private final List<Point> fillCells;
-    private final int widthCell;
-    private final int heightCell;
+    private int widthCell;
+    private int heightCell;
     
     public GameGrid(){
         this.fillCells = new ArrayList<>(25);
         
         this.widthCell = 20;
         this.heightCell = 20;
+    }
+    
+    public void setWidthCell(int widthCell){
+        this.widthCell = widthCell;
+    }
+    
+    public int getWidthCell(){
+        return this.widthCell;
+    }
+    
+    public void setHeightCell(int heightCell) {
+        this.heightCell = heightCell;
     }
     
     @Override
@@ -51,6 +63,12 @@ public class GameGrid extends JPanel {
     
         public void fillCell(int x, int y) {
             fillCells.add(new Point(x, y));
+            repaint();
+        }
+        
+        public void alterGridSize(int width, int height){
+            setWidthCell(width);
+            setHeightCell(height);
             repaint();
         }
     

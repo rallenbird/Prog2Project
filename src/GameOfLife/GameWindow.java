@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import GameOfLife.GameLogic;
+
 public class GameWindow extends JFrame implements ActionListener, ChangeListener {
 
     // Die Koordinaten und Größe des Spielfeldes
@@ -26,6 +28,8 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
     private JPanel      gg_panel;
     private JButton     gg_start, gg_stop, gg_reset;
     private JSlider     gg_velocity, gg_groesse;
+    
+    private GameLogic gamelogic;
     
     /**
      * Konstruktor
@@ -105,6 +109,7 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
         
         this.gg_grid.fillCell(1, 1);
         this.gg_grid.fillCell(10, 10);
+        
           
         this.pack();
     }
@@ -134,6 +139,16 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
             JSlider source = (JSlider)ce.getSource();
             if (!source.getValueIsAdjusting()) {
             System.out.println("Größe: "+(int)source.getValue());
+                if(source.getValue() == 0){
+                    this.gg_grid.alterGridSize(10, 10);
+                }
+                if(source.getValue() == 1){
+                    this.gg_grid.alterGridSize(20, 20);
+                }
+                if(source.getValue() == 2){
+                    this.gg_grid.alterGridSize(30, 30);
+
+                }
             }
         }
     }
