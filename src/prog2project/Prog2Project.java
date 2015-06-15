@@ -14,6 +14,7 @@ public class Prog2Project {
         System.out.println("HELLO WÖRLD!");
         System.out.println("HELLO WÖRLD!");
                 System.out.println("HELLO WÖRLD!");
+                System.out.println("HELLO WÖRLD!");
 
     }
     
