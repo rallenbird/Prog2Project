@@ -9,14 +9,14 @@ package GameOfLife;
  *
  * @author Ralle
  */
-public class Cell {
+public class GameCell {
 
     int cellCoordinateX;
     int cellCoordinateY;
     int cellCount;
     int cellState;
     
-    public Cell(int cellCoordinateX, int cellCoordinateY, int cellState) {
+    public GameCell(int cellCoordinateX, int cellCoordinateY, int cellState) {
         this.cellCoordinateX = cellCoordinateX;
         this.cellCoordinateY = cellCoordinateY;
         this.cellState = cellState;
