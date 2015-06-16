@@ -46,7 +46,11 @@ public class GameGrid extends JPanel {
     
     // Berechnet die anzahl der Zellen in der Breite
     public void calcMaxCellsWidth(int width){
-        this.maxCellsWidth = (width-(width%this.CellSize))/this.CellSize-1;
+        this.maxCellsWidth = (width-(width%this.CellSize))/this.CellSize;
+        if(width%this.CellSize <= this.CellSize){
+            this.maxCellsWidth -= 1;
+            System.out.println("Abzug -1 Breite");
+        }
     }
     
     // Gibt die Anzahl der Zellen in der Breite aus
@@ -56,7 +60,11 @@ public class GameGrid extends JPanel {
     
     // Berechnet die Anzahl der Zellen in der Höhe
     public void calcMaxCellsHeight(int height){
-        this.maxCellsHeight = (height-(height%this.CellSize))/this.CellSize-1;
+        this.maxCellsHeight = (height-(height%this.CellSize))/this.CellSize;
+        if(height%this.CellSize <= this.CellSize){
+            this.maxCellsHeight -= 1;
+            System.out.println("Abzug -1 Höhe");
+        }
     }
     
     // Gibt die Anzahl der Zellen in der Höhe aus
@@ -64,20 +72,44 @@ public class GameGrid extends JPanel {
         return this.maxCellsHeight;
     }
     
-    // Liefert die X Position 
+    // Liefert die X Position der Zelle anhand der X-Koordinate
     public int getXCellbyXCoordinate(int XCoord){
-        if(XCoord >= this.getX()){
-            return (int) (XCoord-(XCoord%this.CellSize))/this.CellSize-1;
+        if(XCoord > this.getX()){
+            XCoord -= this.getX();
+            
+            if(XCoord > (this.maxCellsWidth*this.CellSize)){
+                return this.maxCellsWidth-1;
+            }
+            else{
+                if(XCoord > this.CellSize){
+                    return (int) (XCoord-(XCoord%this.CellSize))/this.CellSize;
+                }
+                else{
+                    return 0;
+                }
+            }
         }
         else{
             return 0;
         }
     }
     
-    // Liefert die Y Position 
+    // Liefert die Y Position der Zelle anhand der Y-Koordinate
     public int getYCellbyYCoordinate(int YCoord){
-        if(YCoord >= this.getY()){
-            return (int) (YCoord-(YCoord%this.CellSize))/this.CellSize-1;
+        if(YCoord > this.getY()){
+            YCoord -= this.getY();
+            
+            if(YCoord > (this.maxCellsHeight*this.CellSize)){
+                return this.maxCellsHeight-1;
+            }
+            else{
+                if(YCoord > this.CellSize){
+                    return (int) (YCoord-(YCoord%this.CellSize))/this.CellSize;
+                }
+                else{
+                    return 0;
+                }
+            }
         }
         else{
             return 0;
@@ -113,13 +145,13 @@ public class GameGrid extends JPanel {
         // Zeichnet die vertikalen Linien
         for (int i = 0; i <= this.maxCellsWidth; i++) {
             g.drawLine(this.getX()+(i*this.CellSize), this.getY(), this.getX()+(i*this.CellSize), this.getY()+(this.CellSize*this.maxCellsHeight));
-            System.out.println("Vertikal: x1:"+(this.getX()+(i*this.CellSize))+", y1:"+this.getY()+", x2:"+(this.getX()+(i*this.CellSize))+", y2:"+(this.getY()+(this.CellSize*this.maxCellsHeight)));
+            //System.out.println("Vertikal: x1:"+(this.getX()+(i*this.CellSize))+", y1:"+this.getY()+", x2:"+(this.getX()+(i*this.CellSize))+", y2:"+(this.getY()+(this.CellSize*this.maxCellsHeight)));
         }
         
         // Zeichnet die horizontalen Linien
         for (int i = 0; i <= this.maxCellsHeight; i++) {
             g.drawLine(this.getX(), this.getY()+(i*this.CellSize), this.getX()+(this.CellSize*this.maxCellsWidth), this.getY()+(i*this.CellSize));
-            System.out.println("Horizont: x1:"+(this.getX())+", y1:"+(this.getY()+(i*this.CellSize))+", x2:"+(this.getX()+(this.CellSize*this.maxCellsWidth))+", y2:"+(this.getY()+(i*this.CellSize)));
+            //System.out.println("Horizont: x1:"+(this.getX())+", y1:"+(this.getY()+(i*this.CellSize))+", x2:"+(this.getX()+(this.CellSize*this.maxCellsWidth))+", y2:"+(this.getY()+(i*this.CellSize)));
         }
     }
     

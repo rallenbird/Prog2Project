@@ -71,6 +71,7 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
         this.gg_grid = new GameGrid();
         this.gg_grid.setBounds(this.xCoordGrid, this.yCoordGrid, this.widthGrid, this.heightGrid);
         this.gg_grid.addMouseListener(this);
+        this.gg_grid.setBackground(Color.yellow);
         
         // Erstellt das Steuerungs-Panel
         this.gg_panel = new JPanel();
@@ -112,13 +113,6 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
         // Fügt JCanvas+JPanel dem JFrame hinzu
         this.getContentPane().add(gg_grid);
         this.getContentPane().add(gg_panel);
-        
-        // Füllen von Test-Zellen (Debug)
-        this.gg_grid.fillCell(1, 1);
-        this.gg_grid.fillCell(10, 10);
-        this.gg_grid.fillCell(1, 25);
-        this.gg_grid.fillCell(2, 26);
-        
           
         this.pack();
     }
@@ -192,6 +186,9 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
         int x = this.gg_grid.getXCellbyXCoordinate(e.getX());
         int y = this.gg_grid.getYCellbyYCoordinate(e.getY());
         
+        // Hier müsste das Entsprechende Feld dann dem Speicher hinzugefügt werden.
+        // Die Logik malt später anhand des Speichers das Feld
+        System.out.println("Calced: x:"+x+", y:"+y+" ");
         this.gg_grid.fillCell(x, y);
     }
 }
