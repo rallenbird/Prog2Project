@@ -165,6 +165,7 @@ public class GameGrid extends JPanel {
     // Ändert die Größe des Grid
     public void alterGridSize(int size){
         this.setCellSize(size);
+        this.fillCells.clear();
         // zeichnet das Grid neu
         repaint();
     }
