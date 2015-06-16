@@ -157,14 +157,30 @@ public class GameGrid extends JPanel {
     
     // Fügt die zu Zeichnenden Zellen in das Array
     public void fillCell(int x, int y) {
-        fillCells.add(new Point(x, y));
+        this.fillCells.add(new Point(x, y));
         // zeichnet das Grid neu
         repaint();
+    }
+    
+    public void removeCell(int x, int y){
+        this.fillCells.remove(new Point(x, y));
+        repaint();
+    }
+    
+    // Entfernt alle Zellen vom Grid
+    public void flushGrid(boolean flush){
+        if(flush){
+            // leert das Array mit den zu zeichnenden Zellen
+            this.fillCells.clear();
+            // zeichnet das Grid neu
+            repaint();
+        }
     }
     
     // Ändert die Größe des Grid
     public void alterGridSize(int size){
         this.setCellSize(size);
+        // leert das Array mit den zu zeichnenden Zellen
         this.fillCells.clear();
         // zeichnet das Grid neu
         repaint();

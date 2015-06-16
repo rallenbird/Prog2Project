@@ -114,6 +114,8 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
         this.getContentPane().add(gg_grid);
         this.getContentPane().add(gg_panel);
           
+        this.gg_grid.fillCell(5, 5);
+        
         this.pack();
     }
     
@@ -126,6 +128,8 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
         }
         else if(ae.getSource() == this.gg_stop){
             System.out.println("Stop gedrückt");
+            
+            this.gg_grid.removeCell(5, 5);
         }
         else if (ae.getSource() == this.gg_reset){
             System.out.println("Reset gedrückt");
