@@ -1,7 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * @author Lukas Huppertz
  */
 package GameOfLife;
 
@@ -14,17 +13,23 @@ import javax.swing.JPanel;
 
 public class GameGrid extends JPanel {
     
+    // Liste der zu zeichnenden Zellen
     private final List<Point> fillCells;
+    // Seitenlänge der Zellen
     private int CellSize;
+    // Anzahl der Zellen in der Breite
     private int maxCellsWidth;
+    // Anzahl der Zellen in der Höhe
     private int maxCellsHeight;
-    
+
+    // Konstruktor
     public GameGrid(){
         this.fillCells = new ArrayList<>(25);
         
         this.CellSize = 20;
     }
     
+    // Setzt die Seitenlänge der Zelle
     public void setCellSize(int size){
         this.CellSize = size;
         this.calcMaxCellsWidth(this.getWidth());
@@ -34,40 +39,68 @@ public class GameGrid extends JPanel {
         System.out.println("CellsWidth: "+this.maxCellsWidth+", CellsHeight: "+this.maxCellsHeight);
     }
     
+    // Gibt die Größe der Zellen aus
     public int getCellSize(){
         return this.CellSize;
     }
     
-    public int calcMaxCellsWidth(int width){
+    // Berechnet die anzahl der Zellen in der Breite
+    public void calcMaxCellsWidth(int width){
         this.maxCellsWidth = (width-(width%this.CellSize))/this.CellSize-1;
-        return this.maxCellsWidth;
     }
     
+    // Gibt die Anzahl der Zellen in der Breite aus
     public int getMaxCellsWidth(){
         return this.maxCellsWidth;
     }
     
-    public int calcMaxCellsHeight(int height){
+    // Berechnet die Anzahl der Zellen in der Höhe
+    public void calcMaxCellsHeight(int height){
         this.maxCellsHeight = (height-(height%this.CellSize))/this.CellSize-1;
-        return this.maxCellsHeight;
     }
     
+    // Gibt die Anzahl der Zellen in der Höhe aus
     public int getMaxCellsHeight(){
         return this.maxCellsHeight;
     }
     
+    // Liefert die X Position 
+    public int getXCellbyXCoordinate(int XCoord){
+        if(XCoord >= this.getX()){
+            return (int) (XCoord-(XCoord%this.CellSize))/this.CellSize-1;
+        }
+        else{
+            return 0;
+        }
+    }
+    
+    // Liefert die Y Position 
+    public int getYCellbyYCoordinate(int YCoord){
+        if(YCoord >= this.getY()){
+            return (int) (YCoord-(YCoord%this.CellSize))/this.CellSize-1;
+        }
+        else{
+            return 0;
+        }
+    }
+    
+    // Überschreibt die setBounds-Funktion um im selben Zug 
+    // die Anzahl der Zellen in Höhe und Breite zu berechnen
     @Override
     public void setBounds(int x, int y, int width, int height){
-        int CellWidth = this.calcMaxCellsWidth(width-1);
-        int CellHeight = this.calcMaxCellsHeight(height-1);
+        this.calcMaxCellsWidth(width-1);
+        this.calcMaxCellsHeight(height-1);
         System.out.println("CellsWidth: "+this.maxCellsWidth+", CellsHeight: "+this.maxCellsHeight);
         super.setBounds(x, y, width-1, height-1);
     }
     
+    // Überschreibt die paintComponent-Funktion damit beim Erstellen
+    // des Grid-Objekts und beim aufruf von repaint() das Grid gezeichnet wird
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         
+        // Füllt das Grid mit den im Array festgesetzten Zellen
         for (Point fillCell : this.fillCells) {
             int cellX = this.getX() + (fillCell.x * this.CellSize);
             int cellY = this.getY() + (fillCell.y * this.CellSize);
@@ -90,14 +123,18 @@ public class GameGrid extends JPanel {
         }
     }
     
-        public void fillCell(int x, int y) {
-            fillCells.add(new Point(x, y));
-            repaint();
-        }
-        
-        public void alterGridSize(int size){
-            this.setCellSize(size);
-            repaint();
-        }
+    // Fügt die zu Zeichnenden Zellen in das Array
+    public void fillCell(int x, int y) {
+        fillCells.add(new Point(x, y));
+        // zeichnet das Grid neu
+        repaint();
+    }
+    
+    // Ändert die Größe des Grid
+    public void alterGridSize(int size){
+        this.setCellSize(size);
+        // zeichnet das Grid neu
+        repaint();
+    }
     
 }

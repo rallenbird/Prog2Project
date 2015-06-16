@@ -1,6 +1,10 @@
-
+/**
+ *
+ * @author Lukas Huppertz
+ */
 package GameOfLife;
 
+import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JSlider;
@@ -8,10 +12,12 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class GameWindow extends JFrame implements ActionListener, ChangeListener {
+public class GameWindow extends JFrame implements ActionListener, ChangeListener, MouseListener {
 
     // Die Koordinaten und Größe des Spielfeldes
     private final int xCoordGrid, yCoordGrid;
@@ -46,8 +52,8 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
         this.xCoordGrid = 10;
         this.yCoordGrid = 10;
         
-        this.widthGrid = width-this.xCoordGrid*3;
-        this.heightGrid = height-this.yCoordGrid*3-this.heightPanel;
+        this.widthGrid = width-this.xCoordGrid*2;
+        this.heightGrid = height-this.yCoordGrid*2-this.heightPanel;
         
         // Ausgabe der Programmdetails (Debug)
         System.out.println("GameWindow.java");
@@ -57,12 +63,14 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
         this.initGameWindow();   
     }
     
-    // 
+    // Setzt die ganzen Komponenten des Fensters fest
+    // Einfache Auslagerung aus Konstruktor
     protected void initGameWindow(){
         
         // Erstellt das GameGrid
         this.gg_grid = new GameGrid();
         this.gg_grid.setBounds(this.xCoordGrid, this.yCoordGrid, this.widthGrid, this.heightGrid);
+        this.gg_grid.addMouseListener(this);
         
         // Erstellt das Steuerungs-Panel
         this.gg_panel = new JPanel();
@@ -115,6 +123,8 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
         this.pack();
     }
     
+    
+    // Fängt die Aktionen der Buttons
     @Override
     public void actionPerformed (ActionEvent ae){
         if(ae.getSource() == this.gg_start){
@@ -128,6 +138,7 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
         }
     }
     
+    // Fängt die Änderung der Slider
     @Override
     public void stateChanged(ChangeEvent ce) {
         if(ce.getSource() == this.gg_velocity){
@@ -153,5 +164,34 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
                 }
             }
         }
+    }
+    
+    @Override
+    public void mousePressed(MouseEvent e) {
+        // Nothing
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        // Nothing
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        // Nothing
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        // Nothing
+    }
+    
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        System.out.println("Maus-X: "+(e.getX())+", Maus-Y: "+(e.getY()));
+        int x = this.gg_grid.getXCellbyXCoordinate(e.getX());
+        int y = this.gg_grid.getYCellbyYCoordinate(e.getY());
+        
+        this.gg_grid.fillCell(x, y);
     }
 }
