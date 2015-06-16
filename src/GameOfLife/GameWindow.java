@@ -71,7 +71,6 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
         this.gg_grid = new GameGrid();
         this.gg_grid.setBounds(this.xCoordGrid, this.yCoordGrid, this.widthGrid, this.heightGrid);
         this.gg_grid.addMouseListener(this);
-        this.gg_grid.setBackground(Color.yellow);
         
         // Erstellt das Steuerungs-Panel
         this.gg_panel = new JPanel();
@@ -128,8 +127,6 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
         }
         else if(ae.getSource() == this.gg_stop){
             System.out.println("Stop gedrückt");
-            
-            this.gg_grid.removeCell(5, 5);
         }
         else if (ae.getSource() == this.gg_reset){
             System.out.println("Reset gedrückt");
