@@ -130,7 +130,16 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
     public void actionPerformed (ActionEvent ae){
         if(ae.getSource() == this.gg_start){
             System.out.println("Start gedrückt");
-            gg_logic.nextGeneration();
+            this.gg_logic.nextGeneration();
+            this.gg_grid.flushGrid(true);
+            for(int i = 0; i <= gg_grid.getMaxCellsWidth(); i++){
+            
+                for(int j = 0; j <= gg_grid.getMaxCellsHeight(); j++){
+                   if(gg_logic.getCellState(i, j)){
+                       this.gg_grid.fillCell(i, j);
+                   }
+                }
+            }
         }
         else if(ae.getSource() == this.gg_stop){
             System.out.println("Stop gedrückt");
@@ -138,6 +147,7 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
         else if (ae.getSource() == this.gg_reset){
             System.out.println("Reset gedrückt");
             gg_grid.flushGrid(true);
+            gg_logic.drawLogic();
         }
     }
     
@@ -157,12 +167,18 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
                 
                 if(source.getValue() == 0){
                     this.gg_grid.alterGridSize(10);
+                    this.gg_logic.drawLogic();
+
                 }
                 if(source.getValue() == 1){
                     this.gg_grid.alterGridSize(20);
+                    this.gg_logic.drawLogic();
+
                 }
                 if(source.getValue() == 2){
                     this.gg_grid.alterGridSize(30);
+                    this.gg_logic.drawLogic();
+
 
                 }
             }
@@ -207,5 +223,6 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
             this.gg_grid.fillCell(x, y);
             this.gg_logic.setCellState(x, y, true);
         }
+        this.gg_logic.getNeighbours(x, y);
     }
 }
