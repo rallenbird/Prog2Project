@@ -5,23 +5,37 @@
  */
 package GameOfLife;
 
+import java.awt.Point;
+
 /**
  *
  * @author Ralle
  */
-public class GameCell {
+public class GameCell extends Point {
 
-    int cellCoordinateX;
-    int cellCoordinateY;
-    int cellCount;
-    int cellState;
+  
+    public boolean cellState;
     
-    public GameCell(int cellCoordinateX, int cellCoordinateY, int cellState) {
-        this.cellCoordinateX = cellCoordinateX;
-        this.cellCoordinateY = cellCoordinateY;
+    public GameCell() {
+        this.x = 0;
+        this.y = 0;
+        this.cellState = false;
+    }
+    
+    public GameCell(int cellCoordinateX, int cellCoordinateY) {
+        this.x = cellCoordinateX;
+        this.y = cellCoordinateY;
+        this.cellState = false;
+    }
+     public GameCell(int cellCoordinateX, int cellCoordinateY, boolean cellState) {
+        this.x = cellCoordinateX;
+        this.y = cellCoordinateY;
         this.cellState = cellState;
     }
     
+    public int hash(){
+        return 31 * x + y;
+    }
     
     
     

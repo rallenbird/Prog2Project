@@ -21,11 +21,10 @@ public class GameGrid extends JPanel {
     private int maxCellsWidth;
     // Anzahl der Zellen in der Höhe
     private int maxCellsHeight;
-
+   
     // Konstruktor
     public GameGrid(){
         this.fillCells = new ArrayList<>(25);
-        
         this.CellSize = 20;
     }
     
@@ -161,10 +160,76 @@ public class GameGrid extends JPanel {
         // zeichnet das Grid neu
         repaint();
     }
-    
+    // Remove cell from grid
     public void removeCell(int x, int y){
         this.fillCells.remove(new Point(x, y));
         repaint();
+    }
+    
+    //Fill or remove cell on grid depending on cell state
+    public void handleCell(int x, int y){
+
+        if(this.fillCells.contains(new Point(x, y))){
+            this.removeCell(x, y);
+        }
+        else{
+            this.fillCell(x,y);
+        }
+    }
+    
+    //get neighbors of cell
+    public int getNeighbours(int x, int y){
+        
+        int neighbours = 0;
+        if(this.fillCells.contains(new Point((x - 1), (y - 1)))){
+            neighbours++;
+        }
+        if(this.fillCells.contains(new Point((x + 1), (y - 1)))){
+            neighbours++;
+        }
+        if(this.fillCells.contains(new Point((x - 1), (y + 1)))){
+            neighbours++;
+        }
+        if(this.fillCells.contains(new Point((x + 1), (y + 1)))){
+            neighbours++;
+        }
+        if(this.fillCells.contains(new Point((x - 1), y))){
+            neighbours++;
+        }
+        if(this.fillCells.contains(new Point((x + 1), y))){
+            neighbours++;
+        }
+        if(this.fillCells.contains(new Point(x, (y - 1)))){
+            neighbours++;
+        }
+        if(this.fillCells.contains(new Point(x, (y + 1)))){
+            neighbours++;
+        }
+
+        System.out.println("" + neighbours);
+        
+        return neighbours;
+    }
+    
+    public void nextGeneration(){
+        int n = 0;
+         List<Point> dyingCells = new ArrayList<>(25);
+        int arrayCount = 0;
+        
+         for (Point cell : fillCells) {
+            //System.out.println(cell);
+            n = this.getNeighbours(cell.x, cell.y);
+            
+            if(n <= 1 || n >= 4){
+                //this.removeCell(cell.x, cell.y);
+                dyingCells.add(cell);             
+            }
+            
+        }
+         for(Point cells:dyingCells){
+             this.removeCell(cells.x, cells.y);
+         }
+
     }
     
     // Entfernt alle Zellen vom Grid

@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -32,7 +33,10 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
     private JPanel      gg_panel;
     private JButton     gg_start, gg_stop, gg_reset;
     private JSlider     gg_velocity, gg_groesse;
-        
+    private GameLogic   gg_logic;    
+    
+    //Cell elements
+
     /**
      * Konstruktor
      * @param width die Breite des Hauptfensters
@@ -124,12 +128,14 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
     public void actionPerformed (ActionEvent ae){
         if(ae.getSource() == this.gg_start){
             System.out.println("Start gedrückt");
+            gg_grid.nextGeneration();
         }
         else if(ae.getSource() == this.gg_stop){
             System.out.println("Stop gedrückt");
         }
         else if (ae.getSource() == this.gg_reset){
             System.out.println("Reset gedrückt");
+            gg_grid.flushGrid(true);
         }
     }
     
@@ -186,10 +192,9 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
         System.out.println("Maus-X: "+(e.getX())+", Maus-Y: "+(e.getY()));
         int x = this.gg_grid.getXCellbyXCoordinate(e.getX());
         int y = this.gg_grid.getYCellbyYCoordinate(e.getY());
-        
         // Hier müsste das Entsprechende Feld dann dem Speicher hinzugefügt werden.
         // Die Logik malt später anhand des Speichers das Feld
         System.out.println("Calced: x:"+x+", y:"+y+" ");
-        this.gg_grid.fillCell(x, y);
+        this.gg_grid.handleCell(x, y);
     }
 }
