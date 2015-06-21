@@ -6,7 +6,6 @@ package GameOfLife;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
@@ -14,7 +13,7 @@ import javax.swing.JPanel;
 public class GameGrid extends JPanel {
     
     // Liste der zu zeichnenden Zellen
-    private final List<Point> fillCells;
+    private final List<GameCell> fillCells;
     // Seitenlänge der Zellen
     private int CellSize;
     // Anzahl der Zellen in der Breite
@@ -132,7 +131,7 @@ public class GameGrid extends JPanel {
         super.paintComponent(g);
         
         // Füllt das Grid mit den im Array festgesetzten Zellen
-        for (Point fillCell : this.fillCells) {
+        for (GameCell fillCell : this.fillCells) {
             int cellX = this.getX() + (fillCell.x * this.CellSize);
             int cellY = this.getY() + (fillCell.y * this.CellSize);
             g.setColor(Color.RED);
@@ -156,20 +155,20 @@ public class GameGrid extends JPanel {
     
     // Fügt die zu Zeichnenden Zellen in das Array
     public void fillCell(int x, int y) {
-        this.fillCells.add(new Point(x, y));
+        this.fillCells.add(new GameCell(x, y, true));
         // zeichnet das Grid neu
         repaint();
     }
     // Remove cell from grid
     public void removeCell(int x, int y){
-        this.fillCells.remove(new Point(x, y));
+        this.fillCells.remove(new GameCell(x, y));
         repaint();
     }
     
     //Fill or remove cell on grid depending on cell state
     public void handleCell(int x, int y){
 
-        if(this.fillCells.contains(new Point(x, y))){
+        if(this.fillCells.contains(new GameCell(x, y, true))){
             this.removeCell(x, y);
         }
         else{
@@ -181,28 +180,28 @@ public class GameGrid extends JPanel {
     public int getNeighbours(int x, int y){
         
         int neighbours = 0;
-        if(this.fillCells.contains(new Point((x - 1), (y - 1)))){
+        if(this.fillCells.contains(new GameCell((x - 1), (y - 1), true))){
             neighbours++;
         }
-        if(this.fillCells.contains(new Point((x + 1), (y - 1)))){
+        if(this.fillCells.contains(new GameCell((x + 1), (y - 1), true))){
             neighbours++;
         }
-        if(this.fillCells.contains(new Point((x - 1), (y + 1)))){
+        if(this.fillCells.contains(new GameCell((x - 1), (y + 1), true))){
             neighbours++;
         }
-        if(this.fillCells.contains(new Point((x + 1), (y + 1)))){
+        if(this.fillCells.contains(new GameCell((x + 1), (y + 1), true))){
             neighbours++;
         }
-        if(this.fillCells.contains(new Point((x - 1), y))){
+        if(this.fillCells.contains(new GameCell((x - 1), y, true))){
             neighbours++;
         }
-        if(this.fillCells.contains(new Point((x + 1), y))){
+        if(this.fillCells.contains(new GameCell((x + 1), y, true))){
             neighbours++;
         }
-        if(this.fillCells.contains(new Point(x, (y - 1)))){
+        if(this.fillCells.contains(new GameCell(x, (y - 1), true))){
             neighbours++;
         }
-        if(this.fillCells.contains(new Point(x, (y + 1)))){
+        if(this.fillCells.contains(new GameCell(x, (y + 1), true))){
             neighbours++;
         }
 
@@ -213,20 +212,20 @@ public class GameGrid extends JPanel {
     
     public void nextGeneration(){
         int n = 0;
-         List<Point> dyingCells = new ArrayList<>(25);
+         List<GameCell> dyingCells = new ArrayList<>(25);
         int arrayCount = 0;
         
-         for (Point cell : fillCells) {
+         for (GameCell cell : this.fillCells) {
             //System.out.println(cell);
             n = this.getNeighbours(cell.x, cell.y);
-            
+            System.out.println(cell);
             if(n <= 1 || n >= 4){
                 //this.removeCell(cell.x, cell.y);
                 dyingCells.add(cell);             
             }
             
         }
-         for(Point cells:dyingCells){
+         for(GameCell cells:dyingCells){
              this.removeCell(cells.x, cells.y);
          }
 
