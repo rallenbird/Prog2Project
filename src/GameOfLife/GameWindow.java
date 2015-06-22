@@ -75,7 +75,7 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
         this.gg_grid = new GameGrid();
         this.gg_grid.setBounds(this.xCoordGrid, this.yCoordGrid, this.widthGrid, this.heightGrid);
         this.gg_grid.addMouseListener(this);
-        //this.gg_grid.fillGridWithCells();
+        //Add game logic
         this.gg_logic = new GameLogic(gg_grid);
         this.gg_logic.drawLogic();
         // Erstellt das Steuerungs-Panel
@@ -129,6 +129,7 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
     @Override
     public void actionPerformed (ActionEvent ae){
         if(ae.getSource() == this.gg_start){
+            //start new generation
             System.out.println("Start gedrückt");
             this.gg_logic.nextGeneration();
             this.gg_grid.flushGrid(true);
@@ -210,19 +211,16 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
         System.out.println("Maus-X: "+(e.getX())+", Maus-Y: "+(e.getY()));
         int x = this.gg_grid.getXCellbyXCoordinate(e.getX());
         int y = this.gg_grid.getYCellbyYCoordinate(e.getY());
-        // Hier müsste das Entsprechende Feld dann dem Speicher hinzugefügt werden.
-        // Die Logik malt später anhand des Speichers das Feld
         System.out.println("Calced: x:"+x+", y:"+y+" ");
         
+        // Add Cells to grid and put logic behind it
         if(this.gg_logic.getCellState(x, y)){
             this.gg_grid.removeCell(x, y);
             this.gg_logic.setCellState(x, y, false);
-
         }
         else{
             this.gg_grid.fillCell(x, y);
             this.gg_logic.setCellState(x, y, true);
         }
-        this.gg_logic.getNeighbours(x, y);
     }
 }
