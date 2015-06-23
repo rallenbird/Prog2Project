@@ -168,7 +168,10 @@ public class GameWindow extends JFrame implements ActionListener, ChangeListener
         else if (ae.getSource() == gg_reset){
             System.out.println("Reset gedrückt");
             gg_grid.flushGrid(true);
-            gg_logic.drawLogic();     
+            gg_logic.drawLogic();
+            synchronized(ongoing){
+                ongoing.pause();
+            }
         }
     }};
         buttonhandling.start();
